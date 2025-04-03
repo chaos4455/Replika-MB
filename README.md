@@ -151,6 +151,8 @@ Embora este dashboard específico seja focado no Message Broker, a **tecnologia 
 
 Este dashboard é um exemplo concreto de como aplicamos nossa expertise para criar não apenas o serviço principal, mas também as ferramentas essenciais para sua operação, monitoramento e otimização.
 
+<img width="616" alt="Cursor_xEueJBp2FJ" src="https://github.com/user-attachments/assets/48f3356d-2f9b-4581-9821-448b7fdd4d91" />
+
 <img width="1920" alt="chrome_cMwygmFz5b" src="https://github.com/user-attachments/assets/988c28df-37dc-4bae-b048-394b77d9d103" />
 
 <img width="409" alt="Cursor_vMCA7EwiQF" src="https://github.com/user-attachments/assets/f0598ea5-ec50-46e4-97ef-b31b8163580b" />
