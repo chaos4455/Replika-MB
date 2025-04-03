@@ -58,6 +58,119 @@ Este projeto nasceu dessa necessidade, servindo como um **acelerador para os pro
   <img src="https://img.shields.io/badge/Primary%20Tech-FastAPI%20%7C%20Tortoise%20ORM%20%7C%20SQLite-blueviolet?style=for-the-badge&logo=fastapi" alt="Tech: FastAPI | Tortoise ORM | SQLite">
 </p>
 
+
+---
+
+## 📊 Dashboard de Métricas em Tempo Real: O Painel de Controle do Replika AI Message Broker 🩺
+
+**Desenvolvido por:** Elias Andrade | Replika AI Solutions
+**Foco:** Observabilidade e Monitoramento da API do Message Broker
+**Status:** Funcional (Showcase & POC)
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Component-Analytics_Dashboard-blue?style=for-the-badge&logo=grafana" alt="Component: Analytics Dashboard">
+  <img src="https://img.shields.io/badge/Monitors-Replika_AI_Message_Broker-orange?style=for-the-badge" alt="Monitors: Replika AI Message Broker">
+  <img src="https://img.shields.io/badge/Data-Real--Time-brightgreen?style=for-the-badge" alt="Data: Real-Time">
+  <img src="https://img.shields.io/badge/Tech-Flask_|_Chart.js_|_API-black?style=for-the-badge&logo=flask" alt="Tech: Flask | Chart.js | API">
+</p>
+
+---
+
+Olá novamente! Elias Andrade aqui. 👨‍💻 Além de construir o *core* do **Replika AI Message Broker**, uma parte crucial do desenvolvimento foi criar uma ferramenta de **observabilidade sob medida**: o **Dashboard de Métricas em Tempo Real**.
+
+As imagens que você vê demonstram essa interface vital. **Não se trata de uma ferramenta genérica como Grafana ou Zabbix adaptada**, mas sim um painel **desenhado especificamente para fornecer insights profundos sobre a performance e o estado interno do *nosso* Message Broker**.
+
+### 🤔 Por que um Dashboard Customizado?
+
+Enquanto ferramentas genéricas são poderosas, elas muitas vezes exigem configuração complexa para extrair as métricas *realmente* relevantes para um sistema específico como um message broker. Nosso dashboard foi construído com um propósito claro:
+
+1.  **Visibilidade Instantânea:** Oferecer um "raio-x" em tempo real da saúde do broker.
+2.  **Métricas Chave Relevantes:** Focar nos indicadores que importam para um sistema de mensageria e sua API (mensagens pendentes, processadas, falhas, vazão de requisições, uso de recursos).
+3.  **Diagnóstico Facilitado:** Ajudar a identificar rapidamente gargalos, picos de carga, erros e tendências de uso.
+4.  **Demonstração de Capacidade:** Mostrar como integramos monitoramento eficaz diretamente em nossas soluções.
+
+### ✨ Funcionalidades em Destaque (Visível nas Imagens)
+
+O dashboard agrega informações críticas de forma visualmente intuitiva:
+
+1.  **KPI Cards de Alto Impacto:** 🟧🟦🟥🟩🟪🟣<0xF0><0x9F><0xA7><0xBD>⬜️
+    *   Visão rápida do estado atual com contadores grandes e cores semânticas.
+    *   **Métricas Exibidas:** `PENDING MSGS` (carga atual na fila), `PROCESSING MSGS` (em processamento), `FAILED MSGS` (erros), `PROCESSED MSGS` (sucessos), `TOTAL REQS` (carga na API), `PROCESS CPU %` (uso de CPU do broker), `PROCESS MEM (MB)` (uso de memória), `UPTIME` (tempo de atividade).
+    *   **Design:** Cards coloridos para identificação rápida do tipo de métrica e seu estado implícito (e.g., vermelho para falhas, laranja para pendências). Alguns layouts mostram versões simplificadas focando em métricas específicas.
+
+2.  **Gráficos de Tendência Temporal:** 📈📉
+    *   Visualização da evolução das métricas ao longo dos últimos N pontos de coleta (configurável).
+    *   `Requests / Interval`: Mostra a taxa de requisições à API, ajudando a identificar picos de uso.
+    *   `Message Status`: Acompanha a dinâmica das filas (pendentes vs processadas/falhadas), crucial para identificar gargalos ou problemas de processamento.
+    *   `Performance (CPU/Mem)`: Gráfico com duplo eixo Y, correlacionando o uso de CPU (%) e Memória (MB) do processo do broker ao longo do tempo. Essencial para capacity planning e detecção de leaks ou sobrecarga.
+
+3.  **Gráficos de Distribuição:** 📊🍩
+    *   `Requests by Route`: Gráfico de barras (geralmente horizontal para melhor leitura dos nomes das rotas) mostrando quais endpoints da API são mais acessados. Útil para entender padrões de uso e otimizar rotas críticas.
+    *   `Requests by Status Code`: Gráfico de rosca/pizza mostrando a distribuição dos códigos de status HTTP retornados pela API (2xx, 4xx, 5xx). Facilita a identificação rápida de taxas de erro.
+
+4.  **Interface Clara e Responsiva:** ✨
+    *   Tema escuro para conforto visual em ambientes NOC/Dev.
+    *   Layout organizado em cards e seções de gráficos.
+    *   Indicador "Live" ou status de erro/atualização na barra superior.
+    *   (Implícito) Projetado para ser responsivo em diferentes tamanhos de tela.
+
+### 🛠️ Como Funciona? (Arquitetura Simplificada)
+
+Este dashboard é, na verdade, uma **aplicação web separada** (implementada em `webdashv2-clean.py` usando Flask, mas poderia ser FastAPI também) que atua como um **cliente da API principal do Message Broker**.
+
+1.  **Coleta Agendada:** Uma thread em background faz login na API do Broker e busca periodicamente os dados do endpoint `/stats`.
+2.  **Processamento e Armazenamento:** Os dados recebidos (estatísticas atuais e históricos) são processados e armazenados em memória (usando `deque` para históricos).
+3.  **Servindo Dados para o Frontend:** Um endpoint na aplicação Flask (`/api/dashboard_data`) expõe esses dados processados em formato JSON.
+4.  **Renderização no Frontend:** O HTML/JavaScript no navegador do usuário busca os dados desse endpoint (`/api/dashboard_data`) em intervalos regulares e atualiza os valores nos cards e os gráficos usando **Chart.js**.
+
+### ✅ Importância e Utilidade
+
+Um dashboard dedicado como este é **fundamental** para:
+
+*   **Monitoramento Operacional (DevOps/SRE):** Acompanhar a saúde e performance do broker em produção.
+*   **Debugging e Troubleshooting:** Identificar rapidamente a causa de problemas (ex: fila crescendo muito -> verificar consumidores; alto CPU -> investigar carga ou código).
+*   **Análise de Performance:** Entender como o broker se comporta sob diferentes cargas e otimizar configurações ou recursos.
+*   **Capacity Planning:** Prever necessidades futuras de recursos com base nas tendências de uso.
+*   **Validação de Testes:** Monitorar o broker durante testes de carga (`geramensagem-v*-loop.py`) para validar performance e estabilidade.
+
+### 🔧 Customização e Integração
+
+Embora este dashboard específico seja focado no Message Broker, a **tecnologia subjacente (o Módulo Controlador de Dashboard da Replika AI)** é flexível.
+
+*   **Configurabilidade:** A definição de quais métricas buscar, como exibi-las (cards, gráficos), cores, títulos, etc., pode ser controlada via configuração (JSON/API no módulo core), permitindo adaptar ou criar novos dashboards para outras APIs ou sistemas.
+*   **Integração:** O dashboard consome uma API REST (`/stats`). Qualquer sistema que exponha métricas via API pode ter um dashboard similar construído com nosso módulo.
+
+Este dashboard é um exemplo concreto de como aplicamos nossa expertise para criar não apenas o serviço principal, mas também as ferramentas essenciais para sua operação, monitoramento e otimização.
+
+<img width="1920" alt="chrome_cMwygmFz5b" src="https://github.com/user-attachments/assets/988c28df-37dc-4bae-b048-394b77d9d103" />
+
+<img width="409" alt="Cursor_vMCA7EwiQF" src="https://github.com/user-attachments/assets/f0598ea5-ec50-46e4-97ef-b31b8163580b" />
+
+<img width="1920" alt="chrome_QYArQzVDpQ" src="https://github.com/user-attachments/assets/316705ac-35b9-495e-bc70-eeec39cd6a36" />
+
+<img width="1920" alt="chrome_wafYhIgNc0" src="https://github.com/user-attachments/assets/4e85b72f-984f-4ebc-8b7f-ac51c9414278" />
+
+<img width="1920" alt="chrome_HwPADchH2w" src="https://github.com/user-attachments/assets/87d95bd6-94cc-4abe-82c3-00bc1eeaff8e" />
+
+<img width="1126" alt="chrome_7zT0Ey6QGS" src="https://github.com/user-attachments/assets/927b9ae2-ecd2-4ef7-b31d-83e38192b565" />
+
+<img width="480" alt="chrome_qKGGdxiHC5" src="https://github.com/user-attachments/assets/8731db11-789b-4897-b159-0850eb98d34c" />
+
+<img width="255" alt="chrome_MxtZeVZXfB" src="https://github.com/user-attachments/assets/7cf2401e-0549-4738-abe6-2c2b476802d1" />
+
+<img width="1878" alt="AsPowerBar_tV9V5PaTes" src="https://github.com/user-attachments/assets/1456f264-aba4-4382-83f9-74577b09983b" />
+
+<img width="1920" alt="chrome_MMmCeIRYsZ" src="https://github.com/user-attachments/assets/fd2f6128-42af-431f-8db9-2b9934777b1e" />
+
+<img width="712" alt="chrome_cjI4lNStdk" src="https://github.com/user-attachments/assets/7249d64c-a7e4-472a-ae33-f77cc938bc2d" />
+
+<img width="487" alt="chrome_gN1LOJRMvG" src="https://github.com/user-attachments/assets/b4358978-30e8-497c-b3aa-1029b3d01e3b" />
+
+---
+**Elias Andrade**
+**Replika AI Solutions**
+*(Contato via WhatsApp: +55 11 9 1335 3137)*
+
 ---
 
 ## 🎯 1. Introdução e Motivação
