@@ -21,6 +21,15 @@
   <!-- Add LinkedIn/GitHub Profile Badges if desired -->
 </p>
 
+
+## 👨‍💻 Sobre o Autor
+
+Eu sou **Elias Andrade**, um apaixonado por tecnologia e resolução de problemas, atuando como Arquiteto de Soluções e Desenvolvedor Full Stack na **Replika AI Solutions**. Tenho vasta experiência em desenvolvimento Python, arquitetura de sistemas, cloud, DevOps, MLOps e na aplicação de Inteligência Artificial para criar soluções de negócio inovadoras. Este projeto é um reflexo dessa paixão e expertise.
+
+**Vamos conectar e discutir como a tecnologia pode impulsionar o seu negócio?**
+
+*   **WhatsApp:** [+55 11 9 1335 3137](https://wa.me/5511913353137)
+
 ---
 
 **Maringá, Paraná, Brasil 🇧🇷 | 03 de Abril de 2025, 12:20 horas**
@@ -508,16 +517,6 @@ A interação típica com o broker via API (conforme demonstrado no log do clien
     *   Implementar **clustering** para alta disponibilidade e escalabilidade.
     *   Refinar o **modelo de segurança** e gerenciamento de usuários/permissões.
     *   Criar **SDKs/Clientes** em Python (e outras linguagens) para facilitar a integração.
-
-## 👨‍💻 Sobre o Autor
-
-Eu sou **Elias Andrade**, um apaixonado por tecnologia e resolução de problemas, atuando como Arquiteto de Soluções e Desenvolvedor Full Stack na **Replika AI Solutions**. Tenho vasta experiência em desenvolvimento Python, arquitetura de sistemas, cloud, DevOps, MLOps e na aplicação de Inteligência Artificial para criar soluções de negócio inovadoras. Este projeto é um reflexo dessa paixão e expertise.
-
-**Vamos conectar e discutir como a tecnologia pode impulsionar o seu negócio?**
-
-*   **WhatsApp:** [+55 11 9 1335 3137](https://wa.me/5511913353137)
-*   **LinkedIn:** [Seu Perfil LinkedIn Aqui]
-*   **GitHub:** [Seu Perfil GitHub Aqui]
 
 ## ©️ Licença
 
